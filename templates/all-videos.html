@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <main>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h2 class="title-section">همه ویدیوها</h2>
+
+                </div>
+                <div class="row">
+                    {% for vid in videos %}
+                        <!-- item -->
+                        <div class="col-md-6 col-lg-4 my-2">
+                            <div class="custom-bg">
+                                <div class="video-card">
+                                    <a href="{{ vid.get_absolut_url }}" class="position-relative d-block ">
+                                        <img src="{{ vid.image.url }}" alt="" class="img-fluid w-100 h-100">
+                                        <div class="video-play-btn">
+                                            <i class="fa fa-play"></i>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between video-category-time">
+                                            <h6 class="">{{ vid.category.all.0 }}</h6>
+                                            <span class="vid-time">{{ vid.time_videos }}</span>
+                                        </div>
+                                        <div class="video-card-details">
+                                            <div>
+                                                <span>22</span>
+                                                <i class="fa fa-eye"></i>
+                                            </div>
+                                            <div>
+                                                <span>22</span>
+                                                <i class="fa fa-heart"></i>
+                                            </div>
+                                            <div>
+                                                <span>22</span>
+                                                <i class="fa fa-comment"></i>
+                                            </div>
+                                        </div>
+                                        <div class="article-overlay"></div>
+                                    </a>
+
+                                </div>
+                                <a href="{{ vid.get_absolut_url }}">
+                                    <h5 class="video-card-title m-2">{{ vid.title }}</h5>
+                                </a>
+                                <div class="my-3 pb-3 mx-2">
+                                    <i class="fa fa-user  ml-1 "></i>
+                                    <span>{{ vid.author }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <!-- end item -->
+
+                </div>
+
+                <div class="d-flex align-items-center justify-content-center mb-3 pagination">
+                    {% if videos.has_other_pages %}
+                        {% if videos.has_next %}
+                            <a href="?page={{ videos.next_page_number }}" class="mx-1"><i
+                                    class="fa fa-chevron-right"></i></a>
+                        {% endif %}
+
+                        {% for i in videos.paginator.page_range %}
+                            {% if videos.number == i %}
+                                <a href="?page={{ i }}" class="active mx-1">{{ i }}</a>
+                            {% else %}
+                                <a href="?page={{ i }}" class="mx-1">{{ i }}</a>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if videos.has_previous %}
+                            <a href="?page={{ videos.previous_page_number }}" class="mx-1"><i class="fa fa-chevron-left"></i></a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+{% endblock %}
+
